@@ -1,0 +1,23 @@
+version: '3.1'
+services:
+    web-app:
+      container_name: profile_app
+      hostname: profile_app
+      image: profile_app_image
+      ports:
+        - 48080:80/tcp
+      tty: true
+      build:
+        context: profile-app
+        dockerfile: Dockerfile
+      networks: 
+        profile_isolated_nw:
+          ipv4_address: 172.24.1.11
+networks:
+  profile_isolated_nw:
+    # use the bridge driver, but enable IPv6
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.24.1.0/24
